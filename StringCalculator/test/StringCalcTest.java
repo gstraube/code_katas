@@ -27,6 +27,7 @@ public class StringCalcTest {
     public void one_number_in_string_returns_the_number() {
         Assert.assertThat(calculator.add("2"), is(2));
     }
+
     @Test
     public void two_numbers_separated_by_comma_returns_the_sum() {
         Assert.assertThat(calculator.add("1,2"), is(3));

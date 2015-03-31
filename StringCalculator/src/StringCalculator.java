@@ -6,7 +6,7 @@ import static java.util.stream.Collectors.toList;
 
 public class StringCalculator {
 
-    public static final String NEGATIVE_NUMBERS_EX_MESSAGE = "Negative numbers are not allowed: ";
+    public static final String NEGATIVE_NUMBERS_EXCEPTION_MESSAGE = "Negative numbers are not allowed: %s";
 
     static int add(String numbersInput) {
 
@@ -30,9 +30,8 @@ public class StringCalculator {
         if (negativeNumbers.size() > 0) {
             String negativeNumbersOutput = negativeNumbers.stream().map(Object::toString)
                     .collect(joining(", "));
-            StringBuilder exceptionMessage = new StringBuilder();
-            exceptionMessage.append(NEGATIVE_NUMBERS_EX_MESSAGE);
-            exceptionMessage.append(negativeNumbersOutput);
+
+            String exceptionMessage = String.format(NEGATIVE_NUMBERS_EXCEPTION_MESSAGE, negativeNumbersOutput);
 
             throw new IllegalArgumentException(exceptionMessage.toString());
         }
