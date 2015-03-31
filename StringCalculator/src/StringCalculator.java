@@ -6,7 +6,7 @@ import static java.util.stream.Collectors.toList;
 
 public class StringCalculator {
 
-    public static final String NEGATIVE_NUMBERS_EXCEPTION_MESSAGE = "Negative numbers are not allowed: %s";
+    private static final String NEGATIVE_NUMBERS_EXCEPTION_MESSAGE = "Negative numbers are not allowed: %s";
 
     static int add(String numbersInput) {
 
