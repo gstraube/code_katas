@@ -37,7 +37,7 @@ public class StringCalculatorTest {
 
     @Test
     public void separator_can_be_specified() {
-        Assert.assertThat(StringCalculator.add("//;\n1;2;3;4"), is(10));
+        Assert.assertThat(StringCalculator.add("//;\n1;2\n3;4"), is(10));
     }
 
     @Test

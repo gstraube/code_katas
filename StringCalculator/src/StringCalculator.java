@@ -20,7 +20,7 @@ public class StringCalculator {
             numbersInput = getNumbers(numbersInput);
         }
 
-        numbersInput = numbersInput.replace("\n", ",");
+        numbersInput = numbersInput.replace("\n", delimiter);
         List<String> separatedNumbers = Arrays.asList(numbersInput.split(delimiter));
 
         List<Integer> numbers = separatedNumbers.stream()
