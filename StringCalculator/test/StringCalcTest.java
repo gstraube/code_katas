@@ -11,7 +11,7 @@ public class StringCalcTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void empty_string_reurns_0() {
+    public void empty_string_returns_0() {
         Assert.assertThat(StringCalculator.add(""), is(0));
     }
 
