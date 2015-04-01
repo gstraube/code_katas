@@ -39,7 +39,7 @@ public class StringCalculator {
 
             String exceptionMessage = String.format(NEGATIVE_NUMBERS_EXCEPTION_MESSAGE, negativeNumbersOutput);
 
-            throw new IllegalArgumentException(exceptionMessage.toString());
+            throw new IllegalArgumentException(exceptionMessage);
         }
 
         return numbers.stream()
