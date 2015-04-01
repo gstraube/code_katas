@@ -23,12 +23,18 @@ public class StringCalculator {
         numbersInput = numbersInput.replace("\n", ",");
         List<String> separatedNumbers = Arrays.asList(numbersInput.split(delimiter));
 
-        List<Integer> numbers = separatedNumbers.stream().map(Integer::parseInt).collect(toList());
+        List<Integer> numbers = separatedNumbers.stream()
+                .map(Integer::parseInt)
+                .filter(number -> number <= 1000)
+                .collect(toList());
 
-        List<Integer> negativeNumbers = numbers.stream().filter((f) -> Math.signum(f) < 0).collect(toList());
+        List<Integer> negativeNumbers = numbers.stream()
+                .filter((f) -> Math.signum(f) < 0)
+                .collect(toList());
 
         if (negativeNumbers.size() > 0) {
-            String negativeNumbersOutput = negativeNumbers.stream().map(Object::toString)
+            String negativeNumbersOutput = negativeNumbers.stream()
+                    .map(Object::toString)
                     .collect(joining(", "));
 
             String exceptionMessage = String.format(NEGATIVE_NUMBERS_EXCEPTION_MESSAGE, negativeNumbersOutput);
@@ -36,7 +42,9 @@ public class StringCalculator {
             throw new IllegalArgumentException(exceptionMessage.toString());
         }
 
-        return numbers.stream().reduce(Math::addExact).get();
+        return numbers.stream()
+                .reduce(Math::addExact)
+                .get();
     }
 
     private static String getNumbers(String numbers) {

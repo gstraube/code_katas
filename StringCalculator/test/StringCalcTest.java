@@ -60,4 +60,10 @@ public class StringCalcTest {
 
         calculator.add("1,2,-3,-4,10,2");
     }
+
+    @Test
+    public void numbers_bigger_than_1000_are_ignored() {
+        Assert.assertThat(calculator.add("1,1001,1000,10,3401,20"), is(1031));
+    }
+
 }
