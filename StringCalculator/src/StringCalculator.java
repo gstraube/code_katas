@@ -8,7 +8,7 @@ public class StringCalculator {
 
     private static final String NEGATIVE_NUMBERS_EXCEPTION_MESSAGE = "Negative numbers are not allowed: %s";
 
-    static int add(String numbersInput) {
+    public static int add(String numbersInput) {
 
         String delimiter = ",";
         if ("".equals(numbersInput)) {
