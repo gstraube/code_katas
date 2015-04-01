@@ -1,5 +1,8 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
@@ -8,20 +11,21 @@ public class StringCalculator {
 
     private static final String NEGATIVE_NUMBERS_EXCEPTION_MESSAGE = "Negative numbers are not allowed: %s";
 
+    private static final String DELIMITER_SPECIFICATION_REGEX = "\\[([^\\[\\]]*)\\]";
+    public static final String DEFAULT_DELIMITER = ",";
+
     public static int add(String numbersInput) {
 
-        String delimiter = ",";
         if ("".equals(numbersInput)) {
             return 0;
         }
 
+        List<String> separatedNumbers;
         if (numbersInput.startsWith("//")) {
-            delimiter = getDelimiter(numbersInput);
-            numbersInput = getNumbers(numbersInput);
+            separatedNumbers = getSeparatedNumbers(numbersInput);
+        } else {
+            separatedNumbers = getSeparatedNumbersWithDefaultDelimiter(numbersInput);
         }
-
-        numbersInput = numbersInput.replace("\n", delimiter);
-        List<String> separatedNumbers = Arrays.asList(numbersInput.split(delimiter));
 
         List<Integer> numbers = separatedNumbers.stream()
                 .map(Integer::parseInt)
@@ -37,7 +41,8 @@ public class StringCalculator {
                     .map(Object::toString)
                     .collect(joining(", "));
 
-            String exceptionMessage = String.format(NEGATIVE_NUMBERS_EXCEPTION_MESSAGE, negativeNumbersOutput);
+            String exceptionMessage = String.format(NEGATIVE_NUMBERS_EXCEPTION_MESSAGE,
+                    negativeNumbersOutput);
 
             throw new IllegalArgumentException(exceptionMessage);
         }
@@ -47,17 +52,36 @@ public class StringCalculator {
                 .get();
     }
 
-    private static String getNumbers(String numbers) {
-        final int endOfDelimiterSpec = numbers.indexOf("\n");
-        final int beginOfNumbers = endOfDelimiterSpec + 1;
+    private static List<String> getSeparatedNumbers(String numbersInput) {
+        Pattern delimiterPattern = Pattern.compile(DELIMITER_SPECIFICATION_REGEX);
 
-        return numbers.substring(beginOfNumbers);
+        int endOfDelimiter = numbersInput.indexOf("\n");
+
+        String delimiterSpecification = numbersInput.substring(2, endOfDelimiter);
+        String numbers = numbersInput.substring(endOfDelimiter + 1);
+
+        Matcher matcher = delimiterPattern.matcher(delimiterSpecification);
+        List<String> delimiters = new ArrayList<>();
+
+        while (matcher.find()) {
+            delimiters.add(matcher.group(1));
+        }
+
+        if (delimiters.size() == 0) {
+            delimiters.add(delimiterSpecification);
+        }
+
+        for (String delimiter : delimiters) {
+            numbers = numbers.replace(delimiter, DEFAULT_DELIMITER);
+        }
+        numbers = numbers.replace("\n", DEFAULT_DELIMITER);
+
+        return Arrays.asList(numbers.split(DEFAULT_DELIMITER));
     }
 
-    private static String getDelimiter(String numbers) {
-        final int beginOfDelimiter = 2;
-        final int endOfDelimiterSpec = numbers.indexOf("\n");
-
-        return numbers.substring(beginOfDelimiter, endOfDelimiterSpec);
+    private static List<String> getSeparatedNumbersWithDefaultDelimiter(String numbers) {
+        String numbersWithoutNewLine = numbers.replace("\n", DEFAULT_DELIMITER);
+        return Arrays.asList(numbersWithoutNewLine.split(DEFAULT_DELIMITER));
     }
+
 }

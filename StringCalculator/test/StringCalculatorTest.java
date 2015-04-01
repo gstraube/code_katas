@@ -37,12 +37,12 @@ public class StringCalculatorTest {
 
     @Test
     public void separator_can_be_specified() {
-        Assert.assertThat(StringCalculator.add("//;\n1;2\n3;4"), is(10));
+        Assert.assertThat(StringCalculator.add("//*\n1*2\n3*4"), is(10));
     }
 
     @Test
     public void separator_spec_can_contain_multiple_chars() {
-        Assert.assertThat(StringCalculator.add("//-=-\n1-=-2-=-3-=-4"), is(10));
+        Assert.assertThat(StringCalculator.add("//-=*\n1-=*2-=*3-=*4"), is(10));
     }
 
     @Test
@@ -56,6 +56,11 @@ public class StringCalculatorTest {
     @Test
     public void numbers_bigger_than_1000_are_ignored() {
         Assert.assertThat(StringCalculator.add("1,1001,1000,10,3401,20"), is(1031));
+    }
+
+    @Test
+    public void multiple_delimiters_can_be_specified() {
+        Assert.assertThat(StringCalculator.add("//[**][-][~~~]\n1-2~~~3\n4**5**6"), is(21));
     }
 
 }
